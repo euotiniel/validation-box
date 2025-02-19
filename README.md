@@ -180,5 +180,5 @@ More countries will be added soon!
 
 ## ✉️ Contact
 
-If you have any questions or suggestions, feel free to open an issue or contact us at [otonielemanuel21@gmail.com](mailto\:otonielemanuel21@gmail.com).
+If you have any questions or suggestions, feel free to open an issue or contact us at [euotiniel.com](https://euotiniel.com).
 
