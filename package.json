@@ -9,6 +9,10 @@
     "build": "tsup",
     "prepublishOnly": "npm run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/euotiniel/validation-box"
+  },
   "keywords": [
     "validation",
     "data-validation",
