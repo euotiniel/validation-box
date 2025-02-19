@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "outDir": "dist",
+      "rootDir": "src",
+      "module": "ESNext",
+      "target": "ESNext",
+      "strict": true,
+      "declaration": true,  // Gera arquivos .d.ts (tipagem)
+      "declarationMap": true,
+      "esModuleInterop": true,
+      "moduleResolution": "node"
+    },
+    "include": ["src", "validators", "index.ts", "test", "types", "utils", "countreis"],
+  }
+  
