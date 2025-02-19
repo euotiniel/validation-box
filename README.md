@@ -1,6 +1,6 @@
 ## Valdation Box
 
-The only validation library (with regex) you need. 
+The only validation library - with flexible regex - you need. 
 
 It's:
 
