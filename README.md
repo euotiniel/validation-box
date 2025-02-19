@@ -2,13 +2,24 @@
 
 The only validation library - with flexible regex - you need. 
 
-It's:
+Most validation libraries rely on predefined rules that might not cover every use case. Validation Box is different because it provides flexible regex-based validation, allowing developers to customize every aspect of their validation logic.
 
-- lightweight;
-- zero-dependency;
-- fast;
-- developer-friendly;
-- type-safe.
+### What Makes It Different?
+
+- Regex-first approach → Unlike most libraries that force you into predefined rules, Validation Box gives you full control over regex patterns.
+- Highly customizable → Easily tweak length limits, special character allowances, case sensitivity, and banned words.
+- No dependencies → Keeps your project lightweight and fast.
+- Type-safe → Fully built with TypeScript for strong typing and autocomplete support.
+- Country-specific validation → Supports multiple phone number formats across different countries.
+
+
+| Feature                      | Validation Box | Yup       | Joi       | Zod       |
+|----------------------------------|--------------------|---------------|---------------|---------------|
+| Flexible Regex               | ✅ Yes             | ❌ No         | ❌ No         | ❌ No         |
+| Zero Dependencies            | ✅ Yes             | ✅ Yes       | ❌ No         | ✅ Yes        |
+| Highly Configurable          | ✅ Yes             | ⚠️ Limited   | ⚠️ Limited   | ✅ Yes        |
+| Country-Specific Validation  | ✅ Yes             | ❌ No         | ❌ No         | ❌ No         |
+
 
 ---
 
@@ -16,12 +27,20 @@ It's:
 
 You can install the package using npm or yarn:
 
-```sh
-# Using npm
-npm install valdation-box
+Using npm
 
-# Using yarn
-yarn add valdation-box
+```sh
+
+npm i validation-box
+
+```
+
+Using yarn
+
+```sh
+
+yarn add validation-box
+
 ```
 
 ---
@@ -29,10 +48,11 @@ yarn add valdation-box
 ### Usage
 
 ```tsx
+"use client" // Next js
 import { useState } from "react";
 import { validateUsername } from "validation-box";
 
-const UsernameValidator = () => {
+export default function UsernameValidator () {
   const [username, setUsername] = useState("");
   const [isValid, setIsValid] = useState(false);
 
@@ -60,8 +80,6 @@ const UsernameValidator = () => {
     </div>
   );
 };
-
-export default UsernameValidator;
 ```
 
 ---
@@ -93,10 +111,11 @@ export default UsernameValidator;
 ### Example (Countries)
 
 ```tsx
+"use client" // Next js
 import { useState } from "react";
-import { validatePhoneAO } from "validation-box/angola";
+import { validatePhoneAO } from "validation-box";
 
-export const PhoneValidatorAO = () => {
+export default function PhoneValidatorAO () {
   const [phone, setPhone] = useState("");
   const [isValid, setIsValid] = useState(false);
 
