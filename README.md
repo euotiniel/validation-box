@@ -84,7 +84,7 @@ export default function UsernameValidator () {
 
 ---
 
-### Validation Options Table*
+### Validation Options Table
 
 | **Validation**        | **Properties**          | **Type**             | **Default**           | **Description** |
 |----------------------|-----------------------|---------------------|----------------------|---------------|
