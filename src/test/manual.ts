@@ -1,3 +1,4 @@
+import { ValidationOptions } from "../types";
 import {
   validateUsername,
   validateUser,
@@ -5,13 +6,16 @@ import {
   validatePassword,
   validateBirthDate,
   validateAge,
-  ValidationOptions,
 } from "../validators/generics.js";
 import {
   validateNIFAO,
   validatePhoneAO,
 } from "../validators/countries/angola.js";
-import { validateCPF, validateCNPJ } from "../validators/countries/brasil";
+import {
+  validateCPF,
+  validateCNPJ,
+  validatePhoneBR,
+} from "../validators/countries/brasil";
 import {
   validateSSN,
   validatePhoneUS,
@@ -23,6 +27,7 @@ type TestCase = {
   value: any;
   options?: ValidationOptions;
   expected: boolean;
+  requireCountryCode?: boolean;
 };
 
 const runTest = (
@@ -191,71 +196,233 @@ runTest(
 );
 
 // Tests for Angola
-runTestCountries("Angola - NIF", [
-  { description: "Valid NIF", value: "123456789", expected: true },
-  { description: "Invalid NIF (letters)", value: "ABC123456", expected: false },
-], validateNIFAO);
+runTestCountries(
+  "Angola - NIF",
+  [
+    { description: "Valid NIF", value: "123456789", expected: true },
+    {
+      description: "Invalid NIF (letters)",
+      value: "ABC123456",
+      expected: false,
+    },
+  ],
+  validateNIFAO
+);
 
-runTestCountries("Angola - Phone", [
-  { description: "Valid number", value: "+244923456789", expected: true },
-  { description: "Invalid number (short)", value: "92345", expected: false },
-  { description: "Number with spaces", value: "+244 923 456 789", expected: false },
-  { description: "Number with separators", value: "+244-923-456-789", expected: false },
-  { description: "Number longer than expected", value: "+244923456789123", expected: false },
-  { description: "Number without country code", value: "923456789", expected: true },
-], validatePhoneAO);
+runTestCountries(
+  "Angola - Phone",
+  [
+    {
+      description: "Valid number",
+      value: "+244923456789",
+      expected: true,
+      requireCountryCode: true,
+    },
+    {
+      description: "Invalid number (short)",
+      value: "92345",
+      expected: false,
+      requireCountryCode: true,
+    },
+    {
+      description: "Number with spaces",
+      value: "+244 923 456 789",
+      expected: true,
+      requireCountryCode: true,
+    },
+    {
+      description: "Number with separators",
+      value: "+244-923-456-789",
+      expected: false,
+      requireCountryCode: true,
+    },
+    {
+      description: "Number longer than expected",
+      value: "+244923456789123",
+      expected: false,
+      requireCountryCode: true,
+    },
+    {
+      description: "Number without country code",
+      value: "923456789",
+      expected: true,
+      requireCountryCode: false,
+    },
+    {
+      description: "Number without country code",
+      value: "923 456 789",
+      expected: true,
+      requireCountryCode: false,
+    },
+    {
+      description: "Number without country code (short)",
+      value: "92345",
+      expected: false,
+      requireCountryCode: false,
+    },
+  ],
+  validatePhoneAO
+);
 
 // Tests for Brazil
-runTestCountries("Brazil - CPF", [
-  { description: "Valid CPF", value: "123.456.789-09", expected: true },
-  {
-    description: "Invalid CPF (repeated sequence)",
-    value: "111.111.111-11",
-    expected: false,
-  },
-], validateCPF);
+runTestCountries(
+  "Brazil - CPF",
+  [
+    { description: "Valid CPF", value: "123.456.789-09", expected: true },
+    {
+      description: "Invalid CPF (repeated sequence)",
+      value: "111.111.111-11",
+      expected: false,
+    },
+  ],
+  validateCPF
+);
 
-runTestCountries("Brazil - CNPJ", [
-  { description: "Valid CNPJ", value: "12.345.678/0001-95", expected: true },
-  {
-    description: "Invalid CNPJ (incorrect length)",
-    value: "12345",
-    expected: false,
-  },
-], validateCNPJ);
+runTestCountries(
+  "Brazil - CNPJ",
+  [
+    { description: "Valid CNPJ", value: "12.345.678/0001-95", expected: true },
+    {
+      description: "Invalid CNPJ (incorrect length)",
+      value: "12345",
+      expected: false,
+    },
+  ],
+  validateCNPJ
+);
 
-runTestCountries("Brazil - Phone", [
-  { description: "Valid number", value: "+5511987654321", expected: true },
-  { description: "Invalid number (short)", value: "1198765", expected: false },
-  { description: "Number with spaces", value: "+55 11 98765 4321", expected: false },
-  { description: "Number with separators", value: "+55-11-98765-4321", expected: false },
-  { description: "Number longer than expected", value: "+5511987654321123", expected: false },
-  { description: "Number without country code", value: "11987654321", expected: true },
-], validatePhoneAO);
+runTestCountries(
+  "Brazil - Phone",
+  [
+    {
+      description: "Valid number",
+      value: "+5511987654321",
+      expected: true,
+      requireCountryCode: true,
+    },
+    {
+      description: "Invalid number (short)",
+      value: "1198765",
+      expected: false,
+      requireCountryCode: true,
+    },
+    {
+      description: "Number with spaces",
+      value: "+55 11 98765 4321",
+      expected: true,
+      requireCountryCode: true,
+    },
+    {
+      description: "Number with separators",
+      value: "+55-11-98765-4321",
+      expected: false,
+      requireCountryCode: true,
+    },
+    {
+      description: "Number longer than expected",
+      value: "+5511987654321123",
+      expected: false,
+      requireCountryCode: true,
+    },
+    {
+      description: "Number without country code",
+      value: "11987654321",
+      expected: true,
+      requireCountryCode: false,
+    },
+    {
+      description: "Number without country code",
+      value: "11 98765 4321",
+      expected: true,
+      requireCountryCode: false,
+    },
+    {
+      description: "Number without country code (short)",
+      value: "1198765",
+      expected: false,
+      requireCountryCode: false,
+    },
+  ],
+  validatePhoneBR
+);
 
 // Tests for USA
-runTestCountries("USA - SSN", [
-  { description: "Valid SSN", value: "123-45-6789", expected: true },
-  {
-    description: "Invalid SSN (wrong format)",
-    value: "123456789",
-    expected: false,
-  },
-], validateSSN);
+runTestCountries(
+  "USA - SSN",
+  [
+    { description: "Valid SSN", value: "123-45-6789", expected: true },
+    {
+      description: "Invalid SSN (wrong format)",
+      value: "123456789",
+      expected: false,
+    },
+  ],
+  validateSSN
+);
 
-runTestCountries("USA - Phone", [
-  { description: "Valid number", value: "+11234567890", expected: true },
-  { description: "Invalid number (short)", value: "12345", expected: false },
-  { description: "Number with spaces", value: "+1 123 456 7890", expected: false },
-  { description: "Number with separators", value: "+1-123-456-7890", expected: false },
-  { description: "Number longer than expected", value: "+11234567890123", expected: false },
-  { description: "Number without country code", value: "1234567890", expected: true },
-], validatePhoneUS);
+runTestCountries(
+  "USA - Phone",
+  [
+    {
+      description: "Valid number",
+      value: "+11234567890",
+      expected: true,
+      requireCountryCode: true,
+    },
+    {
+      description: "Invalid number (short)",
+      value: "12345",
+      expected: false,
+      requireCountryCode: true,
+    },
+    {
+      description: "Number with spaces",
+      value: "+1 123 456 7890",
+      expected: true,
+      requireCountryCode: true,
+    },
+    {
+      description: "Number with separators",
+      value: "+1-123-456-7890",
+      expected: false,
+      requireCountryCode: true,
+    },
+    {
+      description: "Number longer than expected",
+      value: "+11234567890123",
+      expected: false,
+      requireCountryCode: true,
+    },
+    {
+      description: "Number without country code",
+      value: "1234567890",
+      expected: true,
+      requireCountryCode: false,
+    },
+    {
+      description: "Number without country code",
+      value: "123 456 7890",
+      expected: true,
+      requireCountryCode: false,
+    },
+    {
+      description: "Number without country code (short)",
+      value: "12345",
+      expected: false,
+      requireCountryCode: false,
+    },
+  ],
+  validatePhoneUS
+);
 
-runTestCountries("USA - ZIP Code", [
-  { description: "Valid ZIP", value: "12345", expected: true },
-  { description: "Invalid ZIP (short)", value: "12", expected: false },
-], validateZIPCode);
+runTestCountries(
+  "USA - ZIP Code",
+  [
+    { description: "Valid ZIP", value: "12345", expected: true },
+    { description: "Invalid ZIP (short)", value: "12", expected: false },
+  ],
+  validateZIPCode
+);
 
 // npm run build
 // node dist/test/manual.js

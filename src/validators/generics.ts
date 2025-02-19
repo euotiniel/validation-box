@@ -1,18 +1,14 @@
-export type ValidationOptions = {
-  minLength?: number;
-  maxLength?: number;
-  allowSpecialChars?: string;
-  caseSensitive?: boolean;
-  bannedWords?: string[];
-  allowedDomains?: string[];
-  minAge?: number;
-  maxAge?: number;
-};
+import { ValidationOptions } from "../types";
 
 // Helper function to check for banned words
-const containsBannedWords = (value: string, bannedWords?: string[]): boolean => {
+const containsBannedWords = (
+  value: string,
+  bannedWords?: string[]
+): boolean => {
   if (!bannedWords || bannedWords.length === 0) return false;
-  return bannedWords.some((word) => value.toLowerCase().includes(word.toLowerCase()));
+  return bannedWords.some((word) =>
+    value.toLowerCase().includes(word.toLowerCase())
+  );
 };
 
 // Username validation (default: 3-20 characters)
@@ -91,7 +87,10 @@ export const validateBirthDate = (date: string): boolean => {
 };
 
 // Age validation (must be an integer between minAge and maxAge)
-export const validateAge = (age: number, options: ValidationOptions = {}): boolean => {
+export const validateAge = (
+  age: number,
+  options: ValidationOptions = {}
+): boolean => {
   const minAge = options.minAge ?? 18; // Defina um valor padrão para minAge
   const maxAge = options.maxAge ?? 120;
 

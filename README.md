@@ -1,3 +1,11 @@
 ## Valdation Box
 
-The only validation library you'll ever need. Say goodbye to regex...
+The only validation library (with regex) you need. 
+
+It's:
+
+- lightweight;
+- zero-dependency;
+- fast;
+- developer-friendly;
+- type-safe.

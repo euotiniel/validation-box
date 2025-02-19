@@ -10,6 +10,6 @@
       "esModuleInterop": true,
       "moduleResolution": "node"
     },
-    "include": ["src", "validators", "index.ts", "test", "types", "utils", "countreis"],
+    "include": ["src", "validators", "index.ts", "test", "src/types", "utils", "countreis"],
   }
   
