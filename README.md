@@ -1,16 +1,10 @@
-## 📦 Valdation Box
+# 📦 Valdation Box
 
 The only validation library - with flexible regex - you need. 
 
-Most validation libraries rely on predefined rules that might not cover every use case. Validation Box is different because it provides flexible regex-based validation, allowing developers to customize every aspect of their validation logic.
+Validation Box is a **lightweight, zero-dependency** validation library fully written in TypeScript that puts the power of **flexible regex** in your hands. Easily define **minimum and maximum limits**, restrict **banned words**, adjust **case sensitivity rules**, and gain full control over your inputs. 
 
-### What Makes It Different?
-
-- Regex-first approach → Unlike most libraries that force you into predefined rules, Validation Box gives you full control over regex patterns.
-- Highly customizable → Easily tweak length limits, special character allowances, case sensitivity, and banned words.
-- No dependencies → Keeps your project lightweight and fast.
-- Type-safe → Fully built with TypeScript for strong typing and autocomplete support.
-- Country-specific validation → Supports multiple phone number formats across different countries.
+And there’s more… with built-in support for **country-specific validations**, including Angola, Brazil, the USA, and...
 
 
 | Feature                      | Validation Box | Yup       | Joi       | Zod       |
@@ -21,13 +15,9 @@ Most validation libraries rely on predefined rules that might not cover every us
 | Country-Specific Validation  | ✅ Yes             | ❌ No         | ❌ No         | ❌ No         |
 
 
----
+## Installation
 
-### Installation
-
-You can install the package using npm or yarn:
-
-Using npm
+You can install the package using:
 
 ```sh
 
@@ -35,17 +25,9 @@ npm i validation-box
 
 ```
 
-Using yarn
+## Usage
 
-```sh
-
-yarn add validation-box
-
-```
-
----
-
-### Usage
+A quick deployment with **React/Next.js**
 
 ```tsx
 "use client" // Next js
@@ -82,8 +64,6 @@ export default function UsernameValidator () {
 };
 ```
 
----
-
 ### Validation Options Table
 
 | **Validation**        | **Properties**          | **Type**             | **Default**           | **Description** |
@@ -105,10 +85,7 @@ export default function UsernameValidator () {
 | `validateAge`       | `minAge`              | `number`            | `18`                 | Minimum allowed age. |
 |                      | `maxAge`              | `number`            | `120`                | Maximum allowed age. |
 
-
----
-
-### Example (Countries)
+## Usage - Countries
 
 ```tsx
 "use client" // Next js
@@ -138,8 +115,6 @@ export default function PhoneValidatorAO () {
 };
 ```
 
----
-
 ### Validation Options Table
 
 | Country  | Validation Function  | Accepted Formats                          | Example Inputs              |
@@ -158,9 +133,7 @@ export default function PhoneValidatorAO () {
 |          |                      | `XXX XXX XXXX` (spaced)               | `123 456 7890`              |
 
 
----
-
-### Running Tests
+## Running Tests
 
 The package includes unit tests written in Jest. To run them:
 
@@ -168,9 +141,7 @@ The package includes unit tests written in Jest. To run them:
 npm test
 ```
 
----
-
-### Contributing
+## Contributing
 
 We welcome contributions! To contribute:
 
@@ -179,23 +150,17 @@ We welcome contributions! To contribute:
 3. Make your changes and write tests.
 4. Submit a pull request.
 
----
-
-### License
+## License
 
 MIT License. See [LICENSE](LICENSE) for details.
 
----
-
-### Supported Countries
+## Supported Countries
 
 - 🇦🇴 Angola
 - 🇧🇷 Brazil
 - 🇺🇸 USA
 
 More countries will be added soon!
-
----
 
 ## ✉️ Contact
 
