@@ -1,19 +1,17 @@
 # 📦 Valdation Box
 
-The only validation library - with flexible regex - you need. 
+> The only validation library - with flexible regex - you need. 
 
-Validation Box is a **lightweight, zero-dependency** validation library fully written in TypeScript that puts the power of **flexible regex** in your hands. Easily define **minimum and maximum limits**, restrict **banned words**, adjust **case sensitivity rules**, and gain full control over your inputs. 
+Validation Box is a **lightweight, zero-dependency** validation library fully written in TypeScript. Easily define **min and max limits**, restrict **banned words**, adjust **case sensitivity rules**, and gain full control over your inputs. 
 
 And there’s more… with built-in support for **country-specific validations**, including Angola, Brazil, the USA, and...
 
 
-| Feature                      | Validation Box | Yup       | Joi       | Zod       |
+| Feature                      | VBox | Yup       | Joi       | Zod       |
 |----------------------------------|--------------------|---------------|---------------|---------------|
-| Flexible Regex               | ✅ Yes             | ❌ No         | ❌ No         | ❌ No         |
-| Zero Dependencies            | ✅ Yes             | ✅ Yes       | ❌ No         | ✅ Yes        |
-| Highly Configurable          | ✅ Yes             | ⚠️ Limited   | ⚠️ Limited   | ✅ Yes        |
-| Country-Specific Validation  | ✅ Yes             | ❌ No         | ❌ No         | ❌ No         |
-
+| Flexible Regex               | ✅             | ❌         | ❌         | ❌         |
+| Zero Dependencies            | ✅             | ✅       | ❌         | ✅        |
+| Country-Specific Validation  | ✅             | ❌         | ❌         | ❌         |
 
 ## Installation
 
