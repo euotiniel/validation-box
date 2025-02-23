@@ -25,7 +25,7 @@ npm i validation-box
 
 ## Usage
 
-We aim to support as many frameworks and libraries as possible. Currently, Validation Box works with most JavaScript and TypeScript frameworks, including: [React.js](#reactnextjs) & [Vue.js](#vuenuxtjs)..
+We aim to support as many frameworks and libraries as possible. Currently, Validation Box works with most JavaScript and TypeScript frameworks, including: [React.js](#reactnextjs) & [Vue.js](#vuenuxtjs).
 
 ### React/Next.js
 
