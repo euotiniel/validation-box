@@ -25,7 +25,9 @@ npm i validation-box
 
 ## Usage
 
-A quick deployment with **React/Next.js**
+We aim to support as many frameworks and libraries as possible. Currently, Validation Box works with most JavaScript and TypeScript frameworks, including: [React.js](#reactnextjs) & [Vue.js](#vuenuxtjs)..
+
+### React/Next.js
 
 ```tsx
 "use client" // Next js
@@ -60,6 +62,34 @@ export default function UsernameValidator () {
     </div>
   );
 };
+```
+
+### Vue/Nuxt.js
+
+```ts
+<script setup>
+import { ref } from "vue";
+import { validateEmail } from "validation-box";
+
+const email = ref("");
+const message = ref("");
+
+const handleValidation = () => {
+  const isValid = validateEmail(email.value, {
+    allowedDomains: ["gmail.com", "outlook.com"],
+  });
+
+  message.value = isValid ? "✅ Valid email." : "❌ Invalid email.";
+};
+</script>
+
+<template>
+  <div>
+    <input v-model="email" placeholder="Enter your email" />
+    <button @click="handleValidation">Validate</button>
+    <p v-if="message">{{ message }}</p>
+  </div>
+</template>
 ```
 
 ### Validation Options Table
