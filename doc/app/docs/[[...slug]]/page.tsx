@@ -24,6 +24,7 @@ export default async function Page(props: {
   return (
     <DocsPage
       tableOfContent={{
+        enabled: true,
         style: "clerk",
       }}
       toc={page.data.toc}
