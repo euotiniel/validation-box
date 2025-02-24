@@ -1,5 +1,6 @@
 <h1 align="center">
   📦 Valdation Box
+  <br><br>
   <p><a href="https://npm.im/validation-box"><img src="https://badgen.net/npm/v/validation-box"></a> <a href="https://npm.im/validation-box"><img src="https://badgen.net/npm/dm/validation-box"></a>
 </p>
 </h1>
