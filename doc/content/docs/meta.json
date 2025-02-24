@@ -1,0 +1,10 @@
+{
+    "title": "Documentation",
+    "pages": [
+      "introduction",
+      "installation",
+      "guide",
+      "configuration",
+      "contributing"
+    ]
+  }

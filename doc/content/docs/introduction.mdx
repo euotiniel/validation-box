@@ -1,0 +1,92 @@
+---
+title: Introduction
+description: The only validation library - with flexible regex - you need.
+---
+
+import Username from "/components/demo/username.tsx"
+import User from "/components/demo/user.tsx"
+import Password from "/components/demo/password.tsx"
+import Email from "/components/demo/email.tsx"
+import { FilePenLine, Globe, ShieldEllipsis, CpuIcon } from 'lucide-react';
+
+## What is Validation Box?
+
+Validation Box is a **lightweight, zero-dependency, and fully TypeScript-based** validation library. Unlike traditional validation libraries, it gives you complete control over your validation logic by following a ```regex-first``` approach, allowing advanced customizations such as:
+
+- Defining minimum and maximum length for inputs.
+- Restricting banned words.
+- Adjusting case sensitivity rules.
+- Country-specific validation, ensuring that regional formats are correctly followed.
+
+<Callout>Validation Box doesn’t impose rigid rules—it lets you define the validation rules that fit your project’s needs.</Callout>
+
+### View Demo
+
+Want to see Validation Box in action? Check out our interactive demo showcasing real-time validation for usernames, emails, passwords, and phone numbers.
+
+<Tabs items={['Username', 'User', 'Email', 'Password']}>
+  <Tab value="Username">
+    <Username />
+  </Tab>
+
+  <Tab value="User">
+    <User />
+  </Tab>
+
+  <Tab value="Email">
+    <Email />
+  </Tab>
+
+  <Tab value="Password">
+    <Password />
+  </Tab>
+</Tabs>
+
+### Why Choose Validation Box?
+
+Validation Box provides a level of flexibility and security that most validation libraries lack. With customizable regex, country-specific validation, zero dependencies, and compatibility with most ```JavaScript/TypeScript``` frameworks, it gives you complete control over your validation rules while keeping your project lightweight and efficient. Whether you're working on **backend APIs, frontend applications, or mobile apps**, Validation Box adapts to your needs.
+
+<Callout>Validation Box is your first line of defense, preventing code injection, rule evasion, and malformed inputs. With flexibility, security, and efficiency in one package, it ensures your application processes only safe and valid data.</Callout>
+
+
+### Key Features
+
+Validation Box is designed to give you full control over your validation rules while ensuring flexibility, performance, and security. Here’s what makes it stand out:
+
+
+<Cards>
+
+<Card icon={<FilePenLine className="text-blue-300" />} title="Fully Customizable Validation">
+  Define your own regex, set length limits, restrict special characters, and block specific words
+</Card>
+
+<Card icon={<Globe className="text-blue-300" />} title="Country-Specific Validation">
+  Validate phone numbers, emails, and formats based on regional rules
+</Card>
+
+<Card icon={<ShieldEllipsis className="text-blue-300" />} title="First Layer of Security">
+  Prevents invalid or malicious inputs before they reach your backend, reducing vulnerabilities
+</Card>
+
+<Card icon={<CpuIcon className="text-blue-300" />} title="Works Across Multiple Environments">
+  Seamlessly integrates with frontend, backend, and mobile applications
+</Card>
+
+</Cards>
+
+## Comparisons
+
+Validation Box was built with flexibility and simplicity in mind. While powerful libraries like Yup, Zod, and Joi exist, they often come with rigid schemas, heavier dependencies, or are optimized for specific environments. We don’t claim to be better than all of them, but we aim to provide a lightweight, regex-first approach that works across frontend, backend, and mobile applications with country-specific validation as a key differentiator.
+
+If your project needs full control over validation logic, minimal dependencies, and adaptable validation rules, Validation Box might be the right tool for you.
+
+<Callout>These comparisons are based on our experience and testing - personal. If you think something is incorrect or missing, feel free to contribute!</Callout>
+
+| Feature                      | Validation Box | Yup       | Joi       | Zod       |
+|----------------------------------|--------------------|---------------|---------------|---------------|
+| Fully flexible regex              | ✅             | ❌         | ❌         | ❌         |
+| Zero Dependencies            | ✅             | ✅       | ❌         | ✅        |
+| Country-Specific Validation  | ✅             | ❌         | ❌         | ❌         |
+
+
+

@@ -1,0 +1,71 @@
+---
+title: Back-end
+description: Validation Box works seamlessly with most JS/TS frameworks.
+---
+
+Backend validation is critical to prevent malicious data, incorrect formats, and security vulnerabilities before storing or processing user input. Validation Box can be used in Express.js, Fastify, NestJS, and other backend frameworks to sanitize requests before they reach the database.
+
+<Callout>While we demonstrated usage with Express, Fastify and NestJS, Validation Box can be used with any Node.js-based backend framework.</Callout>
+
+
+## Express.js (REST API Validation)
+
+Express is one of the most widely used backend frameworks for building REST APIs. Below, we validate phone numbers before processing requests to ensure only correct formats enter the system.
+
+Validating Phone Numbers (Brasil) in an API:
+
+```ts
+import express from "express";
+import { validatePhoneBR } from "validation-box";
+
+const app = express();
+app.use(express.json());
+
+app.post("/validate", (req, res) => {
+  const { phone } = req.body;
+  const isValid = validatePhoneBR(phone);
+  res.json({ valid: isValid });
+});
+
+app.listen(3000, () => console.log("Server running on port 3000"));
+```
+
+## Fastify
+
+Fastify is optimized for speed and low overhead, making it ideal for high-performance APIs. Below, we validate password security before accepting user registration.
+
+```ts
+import Fastify from "fastify";
+import { validatePassword } from "validation-box";
+
+const fastify = Fastify();
+
+fastify.post("/validate-password", async (request, reply) => {
+  const { password } = request.body;
+  const isValid = validatePassword(password, { minLength: 8 });
+
+  return { valid: isValid };
+});
+
+fastify.listen({ port: 3000 }, () => console.log("Fastify running..."));
+```
+
+## NestJS
+
+NestJS is a scalable Node.js framework built with TypeScript, commonly used for enterprise applications and APIs. Below, we validate email addresses in a NestJS controller before allowing user registration.
+
+```ts
+import { Controller, Post, Body } from "@nestjs/common";
+import { validateEmail } from "validation-box";
+
+@Controller("users")
+export class UserController {
+  @Post("validate-email")
+  validateEmail(@Body("email") email: string) {
+    const isValid = validateEmail(email, { allowedDomains: ["gmail.com", "outlook.com"] });
+    return { valid: isValid };
+  }
+}
+```
+
+Looking for more backend support? Feel free to contribute additional examples for different frameworks!

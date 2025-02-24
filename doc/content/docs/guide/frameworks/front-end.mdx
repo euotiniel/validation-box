@@ -1,0 +1,106 @@
+---
+title: Front-end
+description: Validation Box works seamlessly with most JS/TS frameworks.
+---
+
+Front-end applications often require real-time input validation to improve user experience and prevent incorrect submissions. Validation Box helps enforce rules for usernames, emails, passwords, and phone numbers directly in UI components.
+
+<Callout>Validation Box is designed to be framework-agnostic, meaning it can work with other frontend libraries beyond React, Vue, and Svelte. If you're using Angular, Solid.js, or Alpine.js, you can likely integrate it with minor adjustments.</Callout>
+
+## React & Next.js
+
+React applications benefit from on-the-fly validation using Validation Box. In Next.js, remember to use "use client" at the top of your component.
+
+Username Validation in React (Next.js Compatible):
+
+```mdx
+"use client" 
+import { useState } from "react";
+import { validateUsername } from "validation-box";
+
+export default function UsernameValidator () {
+  const [username, setUsername] = useState("");
+  const [isValid, setIsValid] = useState(false);
+
+  const handleValidation = () => {
+    setIsValid(
+      validateUsername(username, {
+        allowSpecialChars: "_-",
+        bannedWords: ["admin", "root"]
+      })
+    );
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Enter username"
+      />
+      <button onClick={handleValidation}>Validate</button>
+      {isValid ? <p>Valid Username</p> : <p>Invalid Username</p>}
+    </div>
+  );
+};    
+```
+
+## Vue & Nuxt.js
+
+Vue applications, including Nuxt.js, can easily integrate Validation Box with Vue’s reactivity system (ref).
+
+Email Validation in Vue (Compatible with Nuxt 3):
+
+```vue
+<script setup>
+import { ref } from "vue";
+import { validateEmail } from "validation-box";
+
+const email = ref("");
+const message = ref("");
+
+const handleValidation = () => {
+  const isValid = validateEmail(email.value, {
+    allowedDomains: ["gmail.com", "outlook.com"],
+  });
+
+  message.value = isValid ? "Valid email." : "Invalid email.";
+};
+</script>
+
+<template>
+  <div>
+    <input v-model="email" placeholder="Enter your email" />
+    <button @click="handleValidation">Validate</button>
+    <p v-if="message">{{ message }}</p>
+  </div>
+</template>
+```
+
+## Svelte
+
+Svelte makes validation simpler by directly binding values to input fields.
+
+Phone Number (Angola) Validation in Svelte
+
+```mdx
+<script>
+  import { validatePhoneAO } from "validation-box";
+
+  let phone = "";
+  let error = "";
+
+  function handleValidation() {
+    error = validatePhoneAO(phone)
+      ? "Valid phone number."
+      : "Invalid phone number.";
+  }
+</script>
+
+<input bind:value={phone} placeholder="Enter phone number" />
+<button on:click={handleValidation}>Validate</button>
+<p>{error}</p>
+```
+
+Want to extend support? If you test Validation Box with another frontend framework and it works, consider submitting an example to our documentation! 

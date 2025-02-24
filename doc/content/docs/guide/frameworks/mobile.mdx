@@ -1,0 +1,43 @@
+---
+title: Mobile App's
+description: Validation Box works seamlessly with most JS/TS frameworks.
+---
+
+Validation Box can be used in mobile applications to validate user inputs, login forms, and phone numbers in React Native and Expo projects.
+
+Validation Box is compatible with mobile frameworks for validating form inputs.
+
+## React Native
+
+React Native allows developers to create cross-platform mobile apps using JavaScript. Below, we validate usernames in a mobile form.
+
+```tsx
+import React, { useState } from "react";
+import { TextInput, Button, Text, View } from "react-native";
+import { validateUsername } from "validation-box";
+
+export default function UsernameValidator() {
+  const [username, setUsername] = useState("");
+  const [error, setError] = useState("");
+
+  const handleValidation = () => {
+    const isValid = validateUsername(username, { minLength: 5 });
+    setError(isValid ? "Valid Username" : "Invalid Username");
+  };
+
+  return (
+    <View style={{ padding: 20 }}>
+      <TextInput
+        style={{ borderBottomWidth: 1, marginBottom: 10 }}
+        placeholder="Enter Username"
+        value={username}
+        onChangeText={setUsername}
+      />
+      <Button title="Validate" onPress={handleValidation} />
+      {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
+    </View>
+  );
+}
+```
+
+Exploring new mobile integrations? If you successfully integrate Validation Box into another mobile framework, we’d love to see your contribution! 
