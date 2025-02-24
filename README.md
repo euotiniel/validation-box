@@ -1,8 +1,14 @@
-<p align="center">
-  <h1>📦</h1>
-  <h1>Valdation Box</h1>
-  <p>The flexible, regex-first validation library you need.</p>
+<h1 align="center">
+  📦 Valdation Box
+  <p><a href="https://npm.im/validation-box"><img src="https://badgen.net/npm/v/validation-box"></a> <a href="https://npm.im/validation-box"><img src="https://badgen.net/npm/dm/validation-box"></a>
 </p>
+</h1>
+
+<br>
+
+<p align="center">The flexible, regex-first validation library you need.</p>
+
+<br><br>
 
 A **lightweight, zero-dependency validation library for JavaScript and TypeScript**. Fully customizable and supports **country-specific validation** for phone numbers, emails, passwords, and more.  
 
