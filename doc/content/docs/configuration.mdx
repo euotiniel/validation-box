@@ -1,7 +1,49 @@
 ---
-title: Options
+title: Configuration
 description: Validation Box provides flexible validation methods with various configuration options.
 ---
+
+## Validation Schemas
+
+Instead of validating fields one by one, you can define a **schema** to handle multiple validations at once.
+
+### Creating a Validation Schema
+
+Now you can create structured validation using **vboxSchema** instead of calling each validator separately.
+
+```ts
+import { vboxSchema, validator } from "validation-box";
+
+const userSchema = new vboxSchema({
+  username: validator.username({ minLength: 5, bannedWords: ["admin", "root"] }),
+  email: validator.email({ allowedDomains: ["gmail.com", "outlook.com"] }),
+  password: validator.password({ minLength: 8, allowSpecialChars: "!@#$%^&*" }),
+});
+
+const result = userSchema.validate({
+  username: "validUser",
+  email: "user@gmail.com",
+  password: "Secure@123",
+});
+
+console.log(result);
+// { username: true, email: true, password: true }
+```
+
+### Schema Configuration Options
+
+When defining a schema with `vboxSchema`, each field can be customized using various options. These options allow you to **set constraints**, such as minimum and maximum length, allowed special characters, and even restricted words.
+
+The table below outlines the available configuration options for different validation fields:
+
+
+| Method         | Description |
+|---------------|-------------|
+| `username()`  | All available options for the `validateUsername` function. |
+| `user()`      | All available options for the `validateUser` function. |
+| `email()`     | All available options for the `validateEmail` function. |
+| `password()`  | All available options for the `validatePassword` function. |
+| `age()`       | All available options for the `validateAge` function. |
 
 
 ## Configuration Guide
@@ -50,3 +92,4 @@ Currently the list is short, but functional. We are working to make it as global
 |          |                      | `+1 XXX XXX XXXX` (code + spaced)               | `+1 123 456 7890`               |
 |          |                      | `XXXXXXXXXX` (without cod)              | `1234567890`            |
 |          |                      | `XXX XXX XXXX` (spaced)               | `123 456 7890`              |
+
