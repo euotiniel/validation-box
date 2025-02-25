@@ -76,13 +76,13 @@ export const validateBirthDate = (date: string): boolean => {
   return !isNaN(birthDate.getTime()) && birthDate < new Date();
 };
 
-// Age validation (must be an integer between minAge and maxAge)
+// Age validation (must be an integer between min and max)
 export const validateAge = (
   age: number,
   options: AgeValidationOptions = {}
 ): boolean => {
-  const minAge = options.minAge ?? 18; 
-  const maxAge = options.maxAge ?? 120;
+  const min = options.min ?? 18; 
+  const max = options.max ?? 120;
 
-  return Number.isInteger(age) && age >= minAge && age <= maxAge;
+  return Number.isInteger(age) && age >= min && age <= max;
 };

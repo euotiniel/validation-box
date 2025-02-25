@@ -5,11 +5,20 @@
       "module": "ESNext",
       "target": "ESNext",
       "strict": true,
-      "declaration": true,  // Gera arquivos .d.ts (tipagem)
+      "declaration": true,  
       "declarationMap": true,
       "esModuleInterop": true,
       "moduleResolution": "node"
     },
-    "include": ["src", "validators", "index.ts", "test", "src/types", "utils", "countreis"],
+    "include": [
+      "src",          
+      "test",  
+      "countries",   
+      "src/helpers",   
+      "src/types",   
+      "src/manual",   
+      "src/validators", 
+      "src/schemas"  
+    ]
   }
   

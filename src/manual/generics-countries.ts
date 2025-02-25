@@ -182,13 +182,13 @@ runTest<AgeValidationOptions>(
     {
       description: "Below minimum age",
       value: 18,
-      options: { minAge: 21 },
+      options: { min: 21 },
       expected: false,
     },
     {
       description: "Above maximum age",
       value: 40,
-      options: { maxAge: 35 },
+      options: { max: 35 },
       expected: false,
     },
   ],
@@ -425,4 +425,4 @@ runTestCountries(
 );
 
 // npm run build
-// node dist/test/manual.js
+// node dist/manual/generics-countries.js

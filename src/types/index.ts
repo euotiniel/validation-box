@@ -26,6 +26,6 @@ export type PasswordValidationOptions = {
 };
 
 export type AgeValidationOptions = {
-  minAge?: number;
-  maxAge?: number;
+  min?: number;
+  max?: number;
 };
