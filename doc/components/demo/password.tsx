@@ -9,8 +9,8 @@ export default function Password() {
   const handleValidation = () => {
     setIsValid(
         validatePassword(password, {
-        min: 5,
-        max: 15,
+        // min: 5,
+        // max: 15,
         allowSpecialChars: "!@#$%^&*()_+",
         bannedWords: ["admin", "root", "password"],
       })

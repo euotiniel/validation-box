@@ -1,6 +1,6 @@
 {
   "name": "validation-box",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
