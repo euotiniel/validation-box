@@ -21,7 +21,7 @@ export default function UsernameValidator() {
   const [error, setError] = useState("");
 
   const handleValidation = () => {
-    const isValid = validateUsername(username, { minLength: 5 });
+    const isValid = validateUsername(username, { min: 5 });
     setError(isValid ? "Valid Username" : "Invalid Username");
   };
 

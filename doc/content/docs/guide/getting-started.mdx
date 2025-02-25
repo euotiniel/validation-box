@@ -19,8 +19,8 @@ Functions return ```true``` or ```false``` depending on the options. You need to
 import { validateUsername } from "validation-box";
 
 const isValid = validateUsername("dev_otoniel", {
-  minLength: 5,
-  maxLength: 15,
+  min: 5,
+  max: 15,
   allowSpecialChars: "_-",
   bannedWords: ["admin", "root"]
 });

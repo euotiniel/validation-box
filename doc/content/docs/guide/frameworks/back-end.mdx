@@ -42,7 +42,7 @@ const fastify = Fastify();
 
 fastify.post("/validate-password", async (request, reply) => {
   const { password } = request.body;
-  const isValid = validatePassword(password, { minLength: 8 });
+  const isValid = validatePassword(password, { min: 8 });
 
   return { valid: isValid };
 });

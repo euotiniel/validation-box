@@ -9,8 +9,8 @@ export default function Username() {
   const handleValidation = () => {
     setIsValid(
       validateUsername(username, {
-        minLength: 2,
-        maxLength: 15,
+        min: 2,
+        max: 15,
         allowSpecialChars: "_-",
         bannedWords: ["admin", "root"],
       })

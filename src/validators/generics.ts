@@ -1,25 +1,15 @@
-import { ValidationOptions } from "../types";
-
-// Helper function to check for banned words
-const containsBannedWords = (
-  value: string,
-  bannedWords?: string[]
-): boolean => {
-  if (!bannedWords || bannedWords.length === 0) return false;
-  return bannedWords.some((word) =>
-    value.toLowerCase().includes(word.toLowerCase())
-  );
-};
+import { UsernameValidationOptions, UserValidationOptions, EmailValidationOptions, PasswordValidationOptions, AgeValidationOptions } from "../types";
+import { containsBannedWords } from "../helpers";
 
 // Username validation (default: 3-20 characters)
 export const validateUsername = (
   username: string,
-  options: ValidationOptions = {}
+  options: UsernameValidationOptions = {}
 ): boolean => {
   if (containsBannedWords(username, options.bannedWords)) return false;
 
-  const min = options.minLength ?? 3;
-  const max = options.maxLength ?? 20;
+  const min = options.min ?? 3;
+  const max = options.max ?? 20;
   const specialChars = options.allowSpecialChars ?? "_";
   const regex = new RegExp(`^[a-zA-Z0-9${specialChars}]{${min},${max}}$`);
 
@@ -32,12 +22,12 @@ export const validateUsername = (
 // User validation (default: 3-30 characters)
 export const validateUser = (
   user: string,
-  options: ValidationOptions = {}
+  options: UserValidationOptions = {}
 ): boolean => {
   if (containsBannedWords(user, options.bannedWords)) return false;
   if (/^\s*$/.test(user)) return false;
-  const min = options.minLength ?? 3;
-  const max = options.maxLength ?? 30;
+  const min = options.min ?? 3;
+  const max = options.max ?? 30;
   const specialChars = options.allowSpecialChars ?? "'’\\s";
   const regex = new RegExp(`^[a-zA-ZÀ-ÖØ-öø-ÿ${specialChars}]{${min},${max}}$`);
   return regex.test(user);
@@ -46,7 +36,7 @@ export const validateUser = (
 // Email validation with domain restriction
 export const validateEmail = (
   email: string,
-  options: ValidationOptions = {}
+  options: EmailValidationOptions = {}
 ): boolean => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
   const match = email.match(emailRegex);
@@ -63,12 +53,12 @@ export const validateEmail = (
 // Password validation (default: 8-100 characters)
 export const validatePassword = (
   password: string,
-  options: ValidationOptions = {}
+  options: PasswordValidationOptions = {}
 ): boolean => {
   if (containsBannedWords(password, options.bannedWords)) return false;
 
-  const min = options.minLength ?? 8;
-  const max = options.maxLength ?? 100;
+  const min = options.min ?? 8;
+  const max = options.max ?? 100;
   const specialChars = options.allowSpecialChars ?? "!@#$%^&*()_+";
   const regex = new RegExp(
     `^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[${specialChars}])[A-Za-z\\d${specialChars}]{${min},${max}}$`
@@ -89,7 +79,7 @@ export const validateBirthDate = (date: string): boolean => {
 // Age validation (must be an integer between minAge and maxAge)
 export const validateAge = (
   age: number,
-  options: ValidationOptions = {}
+  options: AgeValidationOptions = {}
 ): boolean => {
   const minAge = options.minAge ?? 18; // Defina um valor padrão para minAge
   const maxAge = options.maxAge ?? 120;
