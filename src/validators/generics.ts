@@ -81,7 +81,7 @@ export const validateAge = (
   age: number,
   options: AgeValidationOptions = {}
 ): boolean => {
-  const minAge = options.minAge ?? 18; // Defina um valor padrão para minAge
+  const minAge = options.minAge ?? 18; 
   const maxAge = options.maxAge ?? 120;
 
   return Number.isInteger(age) && age >= minAge && age <= maxAge;
