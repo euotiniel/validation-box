@@ -1,4 +1,4 @@
-import { ValidationOptions } from "../types";
+import { UsernameValidationOptions, UserValidationOptions, EmailValidationOptions, PasswordValidationOptions, AgeValidationOptions } from "../types";
 import {
   validateUsername,
   validateUser,
@@ -22,18 +22,18 @@ import {
   validateZIPCode,
 } from "../validators/countries/usa";
 
-type TestCase = {
+type TestCase<T> = {
   description: string;
   value: any;
-  options?: ValidationOptions;
+  options?: T;
   expected: boolean;
   requireCountryCode?: boolean;
 };
 
-const runTest = (
+const runTest = <T>(
   label: string,
-  testCases: TestCase[],
-  validator: (value: any, options?: ValidationOptions) => boolean
+  testCases: TestCase<T>[],
+  validator: (value: any, options?: T) => boolean
 ) => {
   console.log(`\n🔵 Testing ${label}:`);
   testCases.forEach(({ description, value, options, expected }) => {
@@ -48,7 +48,7 @@ const runTest = (
 
 const runTestCountries = (
   label: string,
-  testCases: TestCase[],
+  testCases: TestCase<undefined>[],
   validator: (value: any) => boolean
 ) => {
   console.log(`\n🔵 Testing ${label}:`);
@@ -63,7 +63,7 @@ const runTestCountries = (
 };
 
 // Username Validation
-runTest(
+runTest<UsernameValidationOptions>(
   "Username",
   [
     { description: "Valid username", value: "otoniel123", expected: true },
@@ -83,7 +83,7 @@ runTest(
     {
       description: "Custom length (5-15)",
       value: "otoni123",
-      options: { minLength: 5, maxLength: 15 },
+      options: { min: 5, max: 15 },
       expected: true,
     },
   ],
@@ -91,7 +91,7 @@ runTest(
 );
 
 // User Validation
-runTest(
+runTest<UserValidationOptions>(
   "User",
   [
     { description: "Valid name", value: "Otoniel", expected: true },
@@ -113,7 +113,7 @@ runTest(
 );
 
 // Email Validation
-runTest(
+runTest<EmailValidationOptions>(
   "Email",
   [
     { description: "Valid email", value: "test@example.com", expected: true },
@@ -135,7 +135,7 @@ runTest(
 );
 
 // Password Validation
-runTest(
+runTest<PasswordValidationOptions>(
   "Password",
   [
     { description: "Valid password", value: "Pass1234!", expected: true },
@@ -154,7 +154,7 @@ runTest(
     {
       description: "Custom length (12-50)",
       value: "StrongPass123!",
-      options: { minLength: 12, maxLength: 50 },
+      options: { min: 12, max: 50 },
       expected: true,
     },
   ],
@@ -162,7 +162,7 @@ runTest(
 );
 
 // Birth Date Validation
-runTest(
+runTest<undefined>(
   "Birth Date",
   [
     { description: "Valid birthdate", value: "2000-01-01", expected: true },
@@ -173,7 +173,7 @@ runTest(
 );
 
 // Age Validation
-runTest(
+runTest<AgeValidationOptions>(
   "Age",
   [
     { description: "Valid age", value: 25, expected: true },

@@ -12,17 +12,17 @@ Validation Box lets you fully customize your validation rules. Below are some ke
 
 | **Validation**        | **Properties**          | **Type**             | **Default**           | **Description** |
 |----------------------|-----------------------|---------------------|----------------------|---------------|
-| `validateUsername`  | `minLength`           | `number`            | `3`                  | Minimum username length. |
-|                      | `maxLength`           | `number`            | `20`                 | Maximum username length. |
+| `validateUsername`  | `min`           | `number`            | `3`                  | Minimum username length. |
+|                      | `max`           | `number`            | `20`                 | Maximum username length. |
 |                      | `allowSpecialChars`   | `string`            | `"_"`                | Allowed special characters. |
 |                      | `bannedWords`         | `string[]`          | `[]`                 | List of forbidden words. |
-| `validateUser`      | `minLength`           | `number`            | `3`                  | Minimum name length. |
-|                      | `maxLength`           | `number`            | `30`                 | Maximum name length. |
+| `validateUser`      | `min`           | `number`            | `3`                  | Minimum name length. |
+|                      | `max`           | `number`            | `30`                 | Maximum name length. |
 |                      | `allowSpecialChars`   | `string`            | `"'’\\s"`            | Allowed special characters. |
 |                      | `bannedWords`         | `string[]`          | `[]`                 | List of forbidden words. |
 | `validateEmail`     | `allowedDomains`      | `string[]`          | `[]`                 | Allowed domains (e.g., `["gmail.com"]`). |
-| `validatePassword`  | `minLength`           | `number`            | `8`                  | Minimum password length. |
-|                      | `maxLength`           | `number`            | `100`                | Maximum password length. |
+| `validatePassword`  | `min`           | `number`            | `8`                  | Minimum password length. |
+|                      | `max`           | `number`            | `100`                | Maximum password length. |
 |                      | `allowSpecialChars`   | `string`            | `"!@#$%^&*()_+"`     | Required special characters. |
 |                      | `bannedWords`         | `string[]`          | `[]`                 | List of forbidden words. |
 | `validateBirthDate` | `-`                   | `-`                 | `-`                  | Must be a valid date in the past (`YYYY-MM-DD`). |
