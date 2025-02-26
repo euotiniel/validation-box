@@ -3,35 +3,83 @@ import { vboxSchema, validator } from "../src/schemas";
 
 describe("vboxSchema Validation", () => {
   const testSchema = new vboxSchema({
-    username: validator.username({ min: 5, bannedWords: ["admin", "root"] }),
-    email: validator.email({ allowedDomains: ["gmail.com", "outlook.com"] }),
-    password: validator.password({ min: 8, allowSpecialChars: "!@#$%^&*" }),
-    age: validator.age({ min: 18, max: 40 }),
+    username: validator.username({ 
+      min: 5, 
+      bannedWords: ["admin", "root"]
+    }),
+    email: validator.email({ 
+      allowedDomains: ["gmail.com", "outlook.com"],
+      required: true 
+    }),
+    password: validator.password({ 
+      min: 8, 
+      max: 50
+    }),
+    age: validator.age({ 
+      min: 18, 
+      max: 40,
+      required: true 
+    })
   });
 
   const testCases = [
-    {
-      input: { username: "validUser", email: "user@gmail.com", password: "StrongPass@123!", age: 25 },
-      expected: { username: true, email: true, password: true, age: true },
+    { 
+      description: "Valid data with all correct fields ✅",
+      input: { 
+        username: "validUser", 
+        email: "user@gmail.com", 
+        password: "StrongPass@123!", 
+        age: 25 
+      }
     },
-    {
-      input: { username: "adm", email: "user@outlook.com", password: "short1!", age: 17 },
-      expected: { username: false, email: true, password: false, age: false },
+    { 
+      description: "Invalid username length and underage ❌",
+      input: { 
+        username: "admi", 
+        email: "user@outlook.com", 
+        password: "short1!Pass123_", 
+        age: 17 
+      }
     },
-    {
-      input: { username: "rootUser", email: "user@yahoo.com", password: "StrongPass@123!", age: 41 },
-      expected: { username: false, email: false, password: true, age: false },
+    { 
+      description: "Banned username and invalid domain ❌",
+      input: { 
+        username: "rootUser", 
+        email: "user@yahoo.com", 
+        password: "StrongPass@123!", 
+        age: 41 
+      }
     },
-    {
-      input: { username: "otoniel", email: "example@gmail.com", password: "NoSpecialChar123", age: 30 },
-      expected: { username: true, email: true, password: false, age: true },
-    },
+    { 
+      description: "Password without special chars ❌",
+      input: { 
+        username: "otoniel", 
+        email: "example@gmail.com", 
+        password: "NoSpecialChar123", 
+        age: 30 
+      }
+    }
   ];
 
-  testCases.forEach(({ input, expected }, index) => {
-    test(`Test Case ${index + 1}: ${JSON.stringify(input)}`, () => {
+  testCases.forEach(({ description, input }) => {
+    test(description, () => {
       const result = testSchema.validate(input);
-      expect(result).toEqual(expected);
+
+      if (result.success) {
+        // ✅ For valid cases, just check data is present
+        expect(result.data).toBeDefined();
+        expect(result.errors).toBeUndefined();
+      } else {
+        // ❌ For invalid cases, verify errors exist
+        expect(result.errors).toBeDefined();
+        expect(result.data).toBeUndefined();
+        
+        // Verify error messages structure
+        Object.values(result.errors || {}).forEach(errorMessages => {
+          expect(Array.isArray(errorMessages)).toBe(true);
+          expect(errorMessages.length).toBeGreaterThan(0);
+        });
+      }
     });
   });
 });

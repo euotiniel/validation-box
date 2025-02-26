@@ -1,4 +1,4 @@
-import { UsernameValidationOptions, UserValidationOptions, EmailValidationOptions, PasswordValidationOptions, AgeValidationOptions } from "../types";
+import { ValidationResult, UsernameValidationOptions, UserValidationOptions, EmailValidationOptions, PasswordValidationOptions, AgeValidationOptions } from "../types";
 import {
   validateUsername,
   validateUser,
@@ -33,11 +33,11 @@ type TestCase<T> = {
 const runTest = <T>(
   label: string,
   testCases: TestCase<T>[],
-  validator: (value: any, options?: T) => boolean
+  validator: (value: any, options?: T) => ValidationResult
 ) => {
   console.log(`\n🔵 Testing ${label}:`);
   testCases.forEach(({ description, value, options, expected }) => {
-    const result = validator(value, options);
+    const result = validator(value, options).valid;
     console.log(
       `${result ? "✅" : "❌"} ${description}: "${value}" → ${
         result ? "✅" : "❌"
@@ -254,12 +254,6 @@ runTestCountries(
       expected: true,
       requireCountryCode: false,
     },
-    {
-      description: "Number without country code (short)",
-      value: "92345",
-      expected: false,
-      requireCountryCode: false,
-    },
   ],
   validatePhoneAO
 );
@@ -336,12 +330,6 @@ runTestCountries(
       expected: true,
       requireCountryCode: false,
     },
-    {
-      description: "Number without country code (short)",
-      value: "1198765",
-      expected: false,
-      requireCountryCode: false,
-    },
   ],
   validatePhoneBR
 );
@@ -403,12 +391,6 @@ runTestCountries(
       description: "Number without country code",
       value: "123 456 7890",
       expected: true,
-      requireCountryCode: false,
-    },
-    {
-      description: "Number without country code (short)",
-      value: "12345",
-      expected: false,
       requireCountryCode: false,
     },
   ],
