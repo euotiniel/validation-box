@@ -1,4 +1,3 @@
-
 export type ValidationResult = {
   valid: boolean;
   errors?: string[];
@@ -19,6 +18,14 @@ export type UsernameValidationOptions = BaseValidationOptions & {
   allowSpecialChars?: string;
   caseSensitive?: boolean;
   bannedWords?: string[];
+  messages?: {
+    min?: string;
+    max?: string;
+    bannedWords?: string;
+    invalidFormat?: string;
+    onlyNumbers?: string;
+    required?: string;
+  };
 };
 
 export type UserValidationOptions = BaseValidationOptions & {
@@ -27,10 +34,23 @@ export type UserValidationOptions = BaseValidationOptions & {
   allowSpecialChars?: string;
   caseSensitive?: boolean;
   bannedWords?: string[];
+  messages?: {
+    min?: string;
+    max?: string;
+    bannedWords?: string;
+    invalidFormat?: string;
+    emptySpace?: string;
+    required?: string;
+  };
 };
 
 export type EmailValidationOptions = BaseValidationOptions & {
   allowedDomains?: string[];
+  messages?: {
+    invalidFormat?: string;
+    invalidDomain?: string;
+    required?: string;
+  };
 };
 
 export type PasswordValidationOptions = BaseValidationOptions & {
@@ -38,11 +58,24 @@ export type PasswordValidationOptions = BaseValidationOptions & {
   max?: number;
   allowSpecialChars?: string;
   bannedWords?: string[];
+  messages?: {
+    min?: string;
+    max?: string;
+    bannedWords?: string;
+    invalidFormat?: string;
+    required?: string;
+  };
 };
 
 export type AgeValidationOptions = BaseValidationOptions & {
   min?: number;
   max?: number;
+  messages?: {
+    min?: string;
+    max?: string;
+    invalidFormat?: string;
+    required?: string;
+  };
 };
 
 
