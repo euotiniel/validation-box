@@ -13,19 +13,25 @@ First hand you need to do the import from the library and call the function you 
 import { validateUsername } from "validation-box";
 ```
 
-Functions return ```true``` or ```false``` depending on the options. You need to create a function and pass the value that is then to the options.
+Instead of returning a simple boolean, functions now return an object containing valid and errors.
 
 ```ts
 import { validateUsername } from "validation-box";
-
-const isValid = validateUsername("dev_otoniel", {
+ 
+const result = validateUsername("dev_otoniel", {
   min: 5,
   max: 15,
   allowSpecialChars: "_-",
-  bannedWords: ["admin", "root"]
+  bannedWords: ["admin", "root"],
+  messages: {
+    min: "Username must be at least 5 characters long.",
+    max: "Username cannot exceed 15 characters.",
+    bannedWords: "Username cannot contain restricted words.",
+  }
 });
-
-console.log(isValid); // true or false
+ 
+console.log(result.valid);  // true or false
+console.log(result.errors); // { username: ["Username must be at least 5 characters long."] }
 ```
 
 <Callout>The default validation rules apply if no options are provided.</Callout>

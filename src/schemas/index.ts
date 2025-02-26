@@ -53,9 +53,9 @@ export class vboxSchema<T extends SchemaRules> {
     return transforms.reduce((acc, transform) => transform(acc), value);
   }
 
-  validate(data: Record<string, any>): { success: boolean; data?: Record<string, any>; errors?: Record<string, string | string[]> } {
+  validate(data: Record<string, any>): { success: boolean; data?: Record<string, any>; errors?: Record<string, string[]> } {
     const validatedData: Record<string, any> = {};
-    const errors: Record<string, string | string[]> = {}; // 🔹 Pode ser string ou array
+    const errors: Record<string, string[]> = {};
     let isValid = true;
 
     for (const field in this.rules) {
@@ -67,7 +67,7 @@ export class vboxSchema<T extends SchemaRules> {
       if (options.required && (value === undefined || value === null || value === '')) {
         isValid = false;
         const message = options.messages?.required || `${field} is required`;
-        errors[field] = message; // 🔹 Retorna string
+        errors[field] = [message];
         if (!this.validateAll) break;
         continue;
       }
@@ -88,7 +88,7 @@ export class vboxSchema<T extends SchemaRules> {
       } else {
         isValid = false;
         const errorMessages = validation.errors || [];
-        errors[field] = errorMessages.length === 1 ? errorMessages[0] : errorMessages; // 🔹 String ou array
+        errors[field] = errorMessages;
         if (!this.validateAll) break;
       }
     }

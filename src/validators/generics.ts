@@ -12,16 +12,16 @@ export const validateUsername = (
   const specialChars = options.allowSpecialChars ?? "_";
 
   if (containsBannedWords(username, options.bannedWords)) {
-    errors.push("Username contains banned words");
+    errors.push( options.messages?.invalidFormat || "Username contains banned words");
   }
 
   if (/^\d+$/.test(username)) {
-    errors.push("Username cannot contain only numbers");
+    errors.push( options.messages?.invalidFormat || "Username cannot contain only numbers");
   }
 
   const regex = new RegExp(`^[a-zA-Z0-9${specialChars}]{${min},${max}}$`);
   if (!regex.test(username)) {
-    errors.push(`Username must be between ${min} and ${max} characters and can only contain letters, numbers and ${specialChars}`);
+    errors.push( options.messages?.invalidFormat || `Username must be between ${min} and ${max} characters and can only contain letters, numbers and ${specialChars}`);
   }
 
   return {
@@ -41,16 +41,16 @@ export const validateUser = (
   const specialChars = options.allowSpecialChars ?? "''\\s";
 
   if (containsBannedWords(user, options.bannedWords)) {
-    errors.push("Name contains banned words");
+    errors.push( options.messages?.invalidFormat || "Name contains banned words");
   }
 
   if (/^\s*$/.test(user)) {
-    errors.push("Name cannot be empty or contain only spaces");
+    errors.push( options.messages?.invalidFormat || "Name cannot be empty or contain only spaces");
   }
 
   const regex = new RegExp(`^[a-zA-ZÀ-ÖØ-öø-ÿ${specialChars}]{${min},${max}}$`);
   if (!regex.test(user)) {
-    errors.push(`Name must be between ${min} and ${max} characters and can only contain letters and ${specialChars}`);
+    errors.push( options.messages?.invalidFormat || `Name must be between ${min} and ${max} characters and can only contain letters and ${specialChars}`);
   }
 
   return {
@@ -69,9 +69,9 @@ export const validateEmail = (
   const match = email.match(emailRegex);
 
   if (!match) {
-    errors.push("Invalid email format");
+    errors.push( options.messages?.invalidFormat || "Invalid email format");
   } else if (options.allowedDomains && !options.allowedDomains.includes(match[1])) {
-    errors.push(`Email domain must be one of: ${options.allowedDomains.join(', ')}`);
+    errors.push( options.messages?.invalidFormat || `Email domain must be one of: ${options.allowedDomains.join(', ')}`);
   }
 
   return {
@@ -91,11 +91,11 @@ export const validatePassword = (
   const specialChars = options.allowSpecialChars ?? "!@#$%^&*()_+";
 
   if (containsBannedWords(password, options.bannedWords)) {
-    errors.push("Password contains banned words");
+    errors.push( options.messages?.invalidFormat || "Password contains banned words");
   }
 
   if (password.length < min || password.length > max) {
-    errors.push(`Password must be between ${min} and ${max} characters`);
+    errors.push( options.messages?.invalidFormat || `Password must be between ${min} and ${max} characters`);
   }
 
   const regex = new RegExp(
@@ -103,7 +103,7 @@ export const validatePassword = (
   );
   
   if (!regex.test(password)) {
-    errors.push("Password must contain at least one uppercase letter, one lowercase letter, one number and one special character");
+    errors.push( options.messages?.invalidFormat || "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character");
   }
 
   return {
@@ -112,19 +112,22 @@ export const validatePassword = (
   };
 };
 
-export const validateBirthDate = (date: string): ValidationResult => {
+export const validateBirthDate = (
+  date: string,
+  options: { messages?: { invalidFormat?: string } } = {}
+): ValidationResult => {
   const errors: string[] = [];
   
   const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
   if (!dateRegex.test(date)) {
-    errors.push("Date must be in YYYY-MM-DD format");
+    errors.push( options.messages?.invalidFormat || "Date must be in YYYY-MM-DD format");
   }
 
   const birthDate = new Date(date);
   if (isNaN(birthDate.getTime())) {
-    errors.push("Invalid date");
+    errors.push( options.messages?.invalidFormat || "Invalid date");
   } else if (birthDate >= new Date()) {
-    errors.push("Birth date must be in the past");
+    errors.push( options.messages?.invalidFormat || "Birth date must be in the past");
   }
 
   return {
@@ -143,11 +146,11 @@ export const validateAge = (
   const max = options.max ?? 120;
 
   if (!Number.isInteger(age)) {
-    errors.push("Age must be an integer");
+    errors.push( options.messages?.invalidFormat || "Age must be an integer");
   }
 
   if (age < min || age > max) {
-    errors.push(`Age must be between ${min} and ${max} years`);
+    errors.push( options.messages?.invalidFormat || `Age must be between ${min} and ${max} years`);
   }
 
   return {

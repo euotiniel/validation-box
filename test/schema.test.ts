@@ -35,7 +35,7 @@ describe("vboxSchema Validation", () => {
     { 
       description: "Invalid username length and underage ❌",
       input: { 
-        username: "adm", 
+        username: "admi", 
         email: "user@outlook.com", 
         password: "short1!Pass123_", 
         age: 17 

@@ -17,7 +17,7 @@ const userSchema = new vboxSchema({
       domain: "Only Gmail addresses are allowed"
     }
   })
-}, //{
+}, // {
 //   validateAll: true,
 //   showErrors: true
 // }
