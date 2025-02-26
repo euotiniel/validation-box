@@ -33,11 +33,17 @@
   "description": "The only validation library - with flexible regex - you need.",
   "devDependencies": {
     "@types/jest": "^29.5.14",
+    "@types/react-dom": "^19.0.4",
     "jest": "^29.7.0",
     "ts-jest": "^29.2.5",
     "tslib": "^2.8.1",
     "tsup": "^8.3.6",
     "typescript": "^5.7.3",
     "vitest": "^3.0.6"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "validation-box": "^1.0.11"
   }
 }

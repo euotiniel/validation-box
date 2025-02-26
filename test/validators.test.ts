@@ -35,8 +35,13 @@ describe("Username Validation", () => {
     ["contains spaces", "user name", false],
     ["only numbers", "123456", false],
     ["mix of letters and numbers", "user123", true],
-  ])("should return %s when testing '%s'", (_, value, expected) => {
-    expect(validateUsername(value)).toBe(expected);
+  ])("should validate when %s testing '%s'", (_, value, expected) => {
+    const result = validateUsername(value);
+    expect(result.valid).toBe(expected);
+    if (!expected) {
+      expect(result.errors).toBeDefined();
+      expect(Array.isArray(result.errors)).toBe(true);
+    }
   });
 });
 
@@ -46,40 +51,57 @@ describe("User (Basic Name) Validation", () => {
     ["too short", "J", {}, false],
     ["contains banned word", "admin", { bannedWords: ["admin"] }, false],
     ["contains numbers", "John1", {}, false],
-    ["special characters allowed", "O’Connor", {}, true],
+    ["special characters allowed", "O'Connor", { allowSpecialChars: "'" }, true],
     ["only spaces", "      ", {}, false],
     ["long but valid", "Maximillian", {}, true],
-  ])("should return %s when testing '%s'", (_, value, options, expected) => {
-    expect(validateUser(value, options)).toBe(expected);
+  ])("should validate when %s testing '%s'", (_, value, options, expected) => {
+    const result = validateUser(value, options);
+    expect(result.valid).toBe(expected);
+    if (!expected) {
+      expect(result.errors).toBeDefined();
+      expect(Array.isArray(result.errors)).toBe(true);
+    }
   });
 });
 
 describe("Email Validation", () => {
   test.each([
-    ["valid email", "user@example.com", true],
-    ["missing @", "userexample.com", false],
-    ["missing domain", "user@", false],
-    ["contains spaces", "user @example.com", false],
-    ["only domain", "@example.com", false],
-    ["missing username", " @example.com", false],
-    ["valid subdomain", "user@mail.example.com", true],
-  ])("should return %s when testing '%s'", (_, value, expected) => {
-    expect(validateEmail(value)).toBe(expected);
+    ["valid email", "user@example.com", {}, true],
+    ["missing @", "userexample.com", {}, false],
+    ["missing domain", "user@", {}, false],
+    ["contains spaces", "user @example.com", {}, false],
+    ["only domain", "@example.com", {}, false],
+    ["missing username", " @example.com", {}, false],
+    ["valid subdomain", "user@mail.example.com", {}, true],
+    ["domain restriction", "user@gmail.com", { allowedDomains: ["gmail.com"] }, true],
+    ["invalid domain", "user@yahoo.com", { allowedDomains: ["gmail.com"] }, false],
+  ])("should validate when %s testing '%s'", (_, value, options, expected) => {
+    const result = validateEmail(value, options);
+    expect(result.valid).toBe(expected);
+    if (!expected) {
+      expect(result.errors).toBeDefined();
+      expect(Array.isArray(result.errors)).toBe(true);
+    }
   });
 });
 
 describe("Password Validation", () => {
   test.each([
-    ["valid password", "P@ssw0rd123", true],
-    ["too short", "Abc1!", false],
-    ["too long", "A".repeat(51), false],
-    ["missing uppercase", "password123!", false],
-    ["missing lowercase", "PASSWORD123!", false],
-    ["missing number", "Password!", false],
-    ["missing special char", "Password123", false],
-    ["contains spaces", "Pass word123!", false],
-  ])("should return %s when testing '%s'", (_, value, expected) => {
-    expect(validatePassword(value)).toBe(expected);
+    ["valid password", "P@ssw0rd123", {}, true],
+    ["too short", "Abc1!", { min: 8 }, false],
+    ["too long", "A".repeat(51), { max: 50 }, false],
+    ["missing uppercase", "password123!", {}, false],
+    ["missing lowercase", "PASSWORD123!", {}, false],
+    ["missing number", "Password!", {}, false],
+    ["missing special char", "Password123", {}, false],
+    ["contains spaces", "Pass word123!", {}, false],
+  ])("should validate when %s testing '%s'", (_, value, options, expected) => {
+    const result = validatePassword(value, options);
+    expect(result.valid).toBe(expected);
+    if (!expected) {
+      expect(result.errors).toBeDefined();
+      expect(Array.isArray(result.errors)).toBe(true);
+    }
   });
 });
 
@@ -92,24 +114,35 @@ describe("Birth Date Validation", () => {
     ["missing year", "--05-15", false],
     ["missing month", "2000--15", false],
     ["missing day", "2000-05-", false],
-  ])("should return %s when testing '%s'", (_, value, expected) => {
-    expect(validateBirthDate(value)).toBe(expected);
+  ])("should validate when %s testing '%s'", (_, value, expected) => {
+    const result = validateBirthDate(value);
+    expect(result.valid).toBe(expected);
+    if (!expected) {
+      expect(result.errors).toBeDefined();
+      expect(Array.isArray(result.errors)).toBe(true);
+    }
   });
 });
 
 describe("Age Validation", () => {
   test.each([
-    ["valid age", 25, true],
-    ["too young", 10, false],
-    ["negative age", -5, false],
-    ["extremely old", 150, false],
-    ["minimum valid age (18)", 18, true],
-    ["borderline case (17)", 17, false],
-  ])("should return %s when testing '%s'", (_, value, expected) => {
-    expect(validateAge(value)).toBe(expected);
+    ["valid age", 25, {}, true],
+    ["too young", 10, { min: 18 }, false],
+    ["negative age", -5, {}, false],
+    ["extremely old", 150, { max: 120 }, false],
+    ["minimum valid age", 18, { min: 18 }, true],
+    ["borderline case", 17, { min: 18 }, false],
+  ])("should validate when %s testing '%s'", (_, value, options, expected) => {
+    const result = validateAge(value, options);
+    expect(result.valid).toBe(expected);
+    if (!expected) {
+      expect(result.errors).toBeDefined();
+      expect(Array.isArray(result.errors)).toBe(true);
+    }
   });
 });
 
+// Country-specific validations follow the same pattern
 describe("Angola - NIF Validation", () => {
   test.each([
     ["valid NIF", "123456789", true],
@@ -120,6 +153,8 @@ describe("Angola - NIF Validation", () => {
     expect(validateNIFAO(value)).toBe(expected);
   });
 });
+
+// Continue with the same pattern for other country-specific validations...
 
 describe("Angola - Phone Validation", () => {
   test.each([

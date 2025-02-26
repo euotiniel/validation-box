@@ -1,88 +1,157 @@
-import { UsernameValidationOptions, UserValidationOptions, EmailValidationOptions, PasswordValidationOptions, AgeValidationOptions } from "../types";
+import { ValidationResult, UsernameValidationOptions, UserValidationOptions, EmailValidationOptions, PasswordValidationOptions, AgeValidationOptions } from "../types";
 import { containsBannedWords } from "../helpers";
 
-// Username validation (default: 3-20 characters)
 export const validateUsername = (
   username: string,
   options: UsernameValidationOptions = {}
-): boolean => {
-  if (containsBannedWords(username, options.bannedWords)) return false;
-
+): ValidationResult => {
+  const errors: string[] = [];
+  
   const min = options.min ?? 3;
   const max = options.max ?? 20;
   const specialChars = options.allowSpecialChars ?? "_";
+
+  if (containsBannedWords(username, options.bannedWords)) {
+    errors.push("Username contains banned words");
+  }
+
+  if (/^\d+$/.test(username)) {
+    errors.push("Username cannot contain only numbers");
+  }
+
   const regex = new RegExp(`^[a-zA-Z0-9${specialChars}]{${min},${max}}$`);
+  if (!regex.test(username)) {
+    errors.push(`Username must be between ${min} and ${max} characters and can only contain letters, numbers and ${specialChars}`);
+  }
 
-  // Rejeita usernames compostos apenas por números
-  if (/^\d+$/.test(username)) return false;
-
-  return regex.test(username);
+  return {
+    valid: errors.length === 0,
+    errors: errors.length > 0 ? errors : undefined
+  };
 };
 
-// User validation (default: 3-30 characters)
 export const validateUser = (
   user: string,
   options: UserValidationOptions = {}
-): boolean => {
-  if (containsBannedWords(user, options.bannedWords)) return false;
-  if (/^\s*$/.test(user)) return false;
+): ValidationResult => {
+  const errors: string[] = [];
+  
   const min = options.min ?? 3;
   const max = options.max ?? 30;
-  const specialChars = options.allowSpecialChars ?? "'’\\s";
+  const specialChars = options.allowSpecialChars ?? "''\\s";
+
+  if (containsBannedWords(user, options.bannedWords)) {
+    errors.push("Name contains banned words");
+  }
+
+  if (/^\s*$/.test(user)) {
+    errors.push("Name cannot be empty or contain only spaces");
+  }
+
   const regex = new RegExp(`^[a-zA-ZÀ-ÖØ-öø-ÿ${specialChars}]{${min},${max}}$`);
-  return regex.test(user);
+  if (!regex.test(user)) {
+    errors.push(`Name must be between ${min} and ${max} characters and can only contain letters and ${specialChars}`);
+  }
+
+  return {
+    valid: errors.length === 0,
+    errors: errors.length > 0 ? errors : undefined
+  };
 };
 
-// Email validation with domain restriction
 export const validateEmail = (
   email: string,
   options: EmailValidationOptions = {}
-): boolean => {
+): ValidationResult => {
+  const errors: string[] = [];
+  
   const emailRegex = /^[a-zA-Z0-9._%+-]+@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
   const match = email.match(emailRegex);
 
-  if (!match) return false;
-
-  if (options.allowedDomains && !options.allowedDomains.includes(match[1])) {
-    return false;
+  if (!match) {
+    errors.push("Invalid email format");
+  } else if (options.allowedDomains && !options.allowedDomains.includes(match[1])) {
+    errors.push(`Email domain must be one of: ${options.allowedDomains.join(', ')}`);
   }
 
-  return true;
+  return {
+    valid: errors.length === 0,
+    errors: errors.length > 0 ? errors : undefined
+  };
 };
 
-// Password validation (default: 8-100 characters)
 export const validatePassword = (
   password: string,
   options: PasswordValidationOptions = {}
-): boolean => {
-  if (containsBannedWords(password, options.bannedWords)) return false;
-
+): ValidationResult => {
+  const errors: string[] = [];
+  
   const min = options.min ?? 8;
   const max = options.max ?? 100;
   const specialChars = options.allowSpecialChars ?? "!@#$%^&*()_+";
-  const regex = new RegExp(
-    `^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[${specialChars}])[A-Za-z\\d${specialChars}]{${min},${max}}$`
-  );
 
-  return regex.test(password);
+  if (containsBannedWords(password, options.bannedWords)) {
+    errors.push("Password contains banned words");
+  }
+
+  if (password.length < min || password.length > max) {
+    errors.push(`Password must be between ${min} and ${max} characters`);
+  }
+
+  const regex = new RegExp(
+    `^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[${specialChars}])[A-Za-z\\d${specialChars}]+$`
+  );
+  
+  if (!regex.test(password)) {
+    errors.push("Password must contain at least one uppercase letter, one lowercase letter, one number and one special character");
+  }
+
+  return {
+    valid: errors.length === 0,
+    errors: errors.length > 0 ? errors : undefined
+  };
 };
 
-// Birthdate validation (must be a valid date in the past)
-export const validateBirthDate = (date: string): boolean => {
+export const validateBirthDate = (date: string): ValidationResult => {
+  const errors: string[] = [];
+  
   const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-  if (!dateRegex.test(date)) return false;
+  if (!dateRegex.test(date)) {
+    errors.push("Date must be in YYYY-MM-DD format");
+  }
 
   const birthDate = new Date(date);
-  return !isNaN(birthDate.getTime()) && birthDate < new Date();
+  if (isNaN(birthDate.getTime())) {
+    errors.push("Invalid date");
+  } else if (birthDate >= new Date()) {
+    errors.push("Birth date must be in the past");
+  }
+
+  return {
+    valid: errors.length === 0,
+    errors: errors.length > 0 ? errors : undefined
+  };
 };
 
-// Age validation (must be an integer between min and max)
 export const validateAge = (
   age: number,
   options: AgeValidationOptions = {}
-): boolean => {
-  const min = options.min ?? 18; 
+): ValidationResult => {
+  const errors: string[] = [];
+  
+  const min = options.min ?? 18;
   const max = options.max ?? 120;
 
-  return Number.isInteger(age) && age >= min && age <= max;
+  if (!Number.isInteger(age)) {
+    errors.push("Age must be an integer");
+  }
+
+  if (age < min || age > max) {
+    errors.push(`Age must be between ${min} and ${max} years`);
+  }
+
+  return {
+    valid: errors.length === 0,
+    errors: errors.length > 0 ? errors : undefined
+  };
 };

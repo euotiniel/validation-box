@@ -1,4 +1,19 @@
-export type UsernameValidationOptions = {
+
+export type ValidationResult = {
+  valid: boolean;
+  errors?: string[];
+}
+
+// Base options that all validators can use
+export type BaseValidationOptions = {
+  required?: boolean;
+  messages?: {
+    required?: string;
+    [key: string]: string | undefined;
+  };
+}
+
+export type UsernameValidationOptions = BaseValidationOptions & {
   min?: number;
   max?: number;
   allowSpecialChars?: string;
@@ -6,7 +21,7 @@ export type UsernameValidationOptions = {
   bannedWords?: string[];
 };
 
-export type UserValidationOptions = {
+export type UserValidationOptions = BaseValidationOptions & {
   min?: number;
   max?: number;
   allowSpecialChars?: string;
@@ -14,18 +29,20 @@ export type UserValidationOptions = {
   bannedWords?: string[];
 };
 
-export type EmailValidationOptions = {
+export type EmailValidationOptions = BaseValidationOptions & {
   allowedDomains?: string[];
 };
 
-export type PasswordValidationOptions = {
+export type PasswordValidationOptions = BaseValidationOptions & {
   min?: number;
   max?: number;
   allowSpecialChars?: string;
   bannedWords?: string[];
 };
 
-export type AgeValidationOptions = {
+export type AgeValidationOptions = BaseValidationOptions & {
   min?: number;
   max?: number;
 };
+
+
