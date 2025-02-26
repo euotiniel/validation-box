@@ -16,8 +16,6 @@ import {
   validateAge,
 } from "../validators/generics";
 
-console.log("🚀 Validation Box v2.0.0 - Executando validação...");
-
 // Enhanced types for better type safety
 type ValidatorFunction<T = any, O = {}> = (
   value: T,

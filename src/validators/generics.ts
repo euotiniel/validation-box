@@ -1,8 +1,6 @@
 import { ValidationResult, UsernameValidationOptions, UserValidationOptions, EmailValidationOptions, PasswordValidationOptions, AgeValidationOptions } from "../types";
 import { containsBannedWords } from "../helpers";
 
-console.log("Vamos nessa")!
-
 export const validateUsername = (
   username: string,
   options: UsernameValidationOptions = {}
