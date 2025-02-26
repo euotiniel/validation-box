@@ -27,7 +27,6 @@ const result = userSchema.validate({
 });
 
 console.log(result);
-// { username: true, email: true, password: true }
 ```
 
 ### Schema Configuration Options
@@ -58,18 +57,23 @@ Validation Box lets you fully customize your validation rules. Below are some ke
 |                      | `max`           | `number`            | `20`                 | Maximum username length. |
 |                      | `allowSpecialChars`   | `string`            | `"_"`                | Allowed special characters. |
 |                      | `bannedWords`         | `string[]`          | `[]`                 | List of forbidden words. |
+|                      | `messages`         | `object`          | `{}`                 | Custom error messages. |
 | `validateUser`      | `min`           | `number`            | `3`                  | Minimum name length. |
 |                      | `max`           | `number`            | `30`                 | Maximum name length. |
 |                      | `allowSpecialChars`   | `string`            | `"'’\\s"`            | Allowed special characters. |
 |                      | `bannedWords`         | `string[]`          | `[]`                 | List of forbidden words. |
+|                      | `messages`         | `object`          | `{}`                 | Custom error messages. |
 | `validateEmail`     | `allowedDomains`      | `string[]`          | `[]`                 | Allowed domains (e.g., `["gmail.com"]`). |
+|                     | `messages`      | `object`          | `{}`                 | Custom error messages. |
 | `validatePassword`  | `min`           | `number`            | `8`                  | Minimum password length. |
 |                      | `max`           | `number`            | `100`                | Maximum password length. |
 |                      | `allowSpecialChars`   | `string`            | `"!@#$%^&*()_+"`     | Required special characters. |
 |                      | `bannedWords`         | `string[]`          | `[]`                 | List of forbidden words. |
+|                      | `messages`         | `object`          | `{}`                 | Custom error messages. |
 | `validateBirthDate` | `-`                   | `-`                 | `-`                  | Must be a valid date in the past (`YYYY-MM-DD`). |
 | `validateAge`       | `min`              | `number`            | `18`                 | Minimum allowed age. |
 |                      | `max`              | `number`            | `120`                | Maximum allowed age. |
+|                      | `messages`              | `object`            | `{}`                | Custom error messages. |
 
 
 One of the trufuns of validation-box over other libraries is country-specific validation. 

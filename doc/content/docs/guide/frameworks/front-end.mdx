@@ -14,21 +14,24 @@ React applications benefit from on-the-fly validation using Validation Box. In N
 Username Validation in React (Next.js Compatible):
 
 ```mdx
-"use client" 
+"use client";
 import { useState } from "react";
 import { validateUsername } from "validation-box";
 
-export default function UsernameValidator () {
+export default function UsernameValidator() {
   const [username, setUsername] = useState("");
-  const [isValid, setIsValid] = useState(false);
+  const [error, setError] = useState("");
 
   const handleValidation = () => {
-    setIsValid(
-      validateUsername(username, {
-        allowSpecialChars: "_-",
-        bannedWords: ["admin", "root"]
-      })
-    );
+    const result = validateUsername(username, {
+      bannedWords: ["admin", "root"],
+      messages: {
+        bannedWords: "You are using prohibited words",
+      },
+    });
+
+    setError(result.valid ? "" : result.errors?.[0] || "Invalid username!");
+    console.log(result);
   };
 
   return (
@@ -37,14 +40,92 @@ export default function UsernameValidator () {
         type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        placeholder="Enter username"
+        placeholder="Enter your username"
       />
       <button onClick={handleValidation}>Validate</button>
-      {isValid ? <p>Valid Username</p> : <p>Invalid Username</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
-};    
+}  
 ```
+Check the return of the console.
+
+### Schema
+
+Now you can create structured validation using **vboxSchema** instead of calling each validator separately.
+
+<Callout>We are providing an example using React, but the same validation schema can be adapted to work with Vue as well. The validation logic remains consistent across different frameworks, ensuring flexibility and reusability of the schema.</Callout>
+
+```tsx
+"use client"
+import React, { useState } from "react";
+import { vboxSchema, validator } from "validation-box";
+
+const userSchema = new vboxSchema({
+  username: validator.username({
+    bannedWords: ["admin", "root"],
+    messages: { bannedWords: "You are using prohibited words"},
+  }),
+  password: validator.password({
+    min: 8,
+    messages: { invalidFormat: "Invalid Password" },
+  }),
+});
+
+const UserRegistrationForm: React.FC = () => {
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState<Record<string, string[]>>({});
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const result = userSchema.validate(formData);
+    if (result.success) {
+      console.log("Form data is valid:", result.data);
+      setErrors({});
+    } else {
+      console.log("Form data is invalid:", result.errors);
+      setErrors(result.errors || {});
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            placeholder="Enter username"
+          />
+        {errors.username && <p>{errors.username}</p>}
+      </div>
+      <div>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Enter password"
+          />
+        {errors.password && <p>{errors.password}</p>}
+      </div>
+      <button type="submit">Login</button>
+    </form>
+  );
+};
+
+export default UserRegistrationForm;
+```
+
 
 ## Vue & Nuxt.js
 
@@ -61,11 +142,18 @@ const email = ref("");
 const message = ref("");
 
 const handleValidation = () => {
-  const isValid = validateEmail(email.value, {
+  const result = validateEmail(email.value, {
     allowedDomains: ["gmail.com", "outlook.com"],
+    messages: {
+      allowedDomains: "Only Gmail or Outlook emails are allowed",
+    }
   });
 
-  message.value = isValid ? "Valid email." : "Invalid email.";
+  if (result.valid) {
+    message.value = "✅ Valid email!";
+  } else {
+    message.value = result.errors?.[0] || "❌ Invalid email!";
+  }
 };
 </script>
 

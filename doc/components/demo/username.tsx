@@ -4,23 +4,27 @@ import { validateUsername } from "validation-box";
 
 export default function Username() {
   const [username, setUsername] = useState("");
-  const [isValid, setIsValid] = useState<null | boolean>(null);
+  const [validationResult, setValidationResult] = useState<{
+    valid: boolean;
+    errors?: string[];
+  } | null>(null);
 
   const handleValidation = () => {
-    setIsValid(
-      validateUsername(username, {
-        min: 2,
-        max: 15,
-        allowSpecialChars: "_-",
-        bannedWords: ["admin", "root"],
-      })
-    );
+    const result = validateUsername(username, {
+      min: 2,
+      max: 15,
+      allowSpecialChars: "_-",
+      bannedWords: ["admin", "root"],
+      
+    });
+
+    setValidationResult(result);
   };
 
   return (
     <div className="flex flex-col gap-2 items-center pt-20 pb-16">
       <input
-        className="w-[300px] h-8 bg-transparent border text-neutral-200 border-neutral-700/35 rounded-md text-sm px-2 py-[7px] outline-none placeholder:text-neutral-500/40 "
+        className="w-[300px] h-8 bg-transparent border text-neutral-200 border-neutral-700/35 rounded-md text-sm px-2 py-[7px] outline-none placeholder:text-neutral-500/40"
         type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
@@ -32,8 +36,14 @@ export default function Username() {
       >
         Validate
       </button>
-      {isValid !== null && (
-        isValid ? <p className="text-sm text-neutral-400">✅ Valid Username</p> : <p className="text-sm text-neutral-400">❌ Invalid Username</p>
+      {validationResult && (
+        validationResult.valid ? (
+          <p className="text-sm text-neutral-400">✅ Valid Username</p>
+        ) : (
+          <p className="text-sm text-neutral-400">
+            ❌ {validationResult.errors?.[0] || "Invalid Username"}
+          </p>
+        )
       )}
     </div>
   );

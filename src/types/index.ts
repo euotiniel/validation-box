@@ -48,7 +48,7 @@ export type EmailValidationOptions = BaseValidationOptions & {
   allowedDomains?: string[];
   messages?: {
     invalidFormat?: string;
-    invalidDomain?: string;
+    allowedDomains?: string;
     required?: string;
   };
 };

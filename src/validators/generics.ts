@@ -87,7 +87,7 @@ export const validateEmail = (
   if (!match) {
     errors.push(options.messages?.invalidFormat || "Invalid email format");
   } else if (options.allowedDomains && !options.allowedDomains.includes(match[1])) {
-    errors.push(options.messages?.invalidDomain || `Email domain must be one of: ${options.allowedDomains.join(', ')}`);
+    errors.push(options.messages?.allowedDomains || `Email domain must be one of: ${options.allowedDomains.join(', ')}`);
   }
 
   return {
