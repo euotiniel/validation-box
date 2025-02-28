@@ -1,5 +1,5 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import { Globe, Twitter } from "lucide-react";
+import { Globe, Twitter, Package } from "lucide-react";
 
 export const baseOptions: BaseLayoutProps = {
   nav: {
@@ -15,16 +15,23 @@ export const baseOptions: BaseLayoutProps = {
     },
     {
       type: 'icon',
-      icon: <Twitter />,
+      icon: <Globe />,
       text: 'X',
-      url: 'https://x.com/euotiniel',
+      url: 'https://euotiniel.com/',
       secondary: true,
     },
     {
       type: 'icon',
-      icon: <Globe />,
+      icon: <Package />,
+      text: 'npm',
+      url: 'https://www.npmjs.com/package/validation-box',
+      secondary: true,
+    },
+    {
+      type: 'icon',
+      icon: <Twitter />,
       text: 'X',
-      url: 'https://euotiniel.com/',
+      url: 'https://x.com/euotiniel',
       secondary: true,
     },
   ],
